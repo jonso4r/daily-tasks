@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Lancamentos</title>
+
+<link rel="stylesheet" href="/css/styles.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+<body>
+	<nav th:insert="fragments/navbar :: navbar"></nav>
+	<div class="container">
+		<form th:action="@{/task/add-action}" th:object="${task}" th:method="POST">
+
+			<div class="alert alert-danger"
+				th:if="${#fields.hasAnyErrors()}">
+				<div th:each="detailedError : ${#fields.detailedErrors()}">
+					<span th:text="${detailedError.message}"></span>
+				</div>
+			</div>
+
+			<div class="alert alert-success fade show"
+				th:if="${!#strings.isEmpty(mensagem)}">
+				<span th:text="${mensagem}"></span>
+			</div>
+			<div class="form_content">
+				<input type="hidden" th:field="*{id}" />
+				<div class="row">
+					<div class="col-md-4 offset-md-4">
+						<div class="form-group">
+							<label for="task_date">Data: </label> <input id="task_date"
+								class="form-control" th:field="*{date}"
+								placeholder="Informe a data da atividade" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 offset-md-4">
+						<div class="form-group">
+							<label for="task_description">Descrição: </label>
+							<textarea id="task_description" class="form-control"
+								th:field="*{description}"
+								placeholder="Informe a descrição da atividade" rows="6"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 offset-md-4">
+						<div class="form-group">
+							<label for="task_quantity_hours">Quantidade de horas: </label> <input
+								id="task_quantity_hours" class="form-control"
+								th:field="*{quantityHours}"
+								placeholder="Informe a quantidade de horas trabalhadas" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 offset-md-4">
+						<div class="form-group text-center">
+							<button type="submit" class="btn btn-primary">Salvar atividade</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="/js/jquery-3.4.0.min.js" type="text/javascript"></script>
+	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/js/jquery.mask.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#task_date").mask('99/99/9999');
+			$("#task_quantity_hours").mask('00:00');
+		});
+	</script>
+</body>
+</html>
